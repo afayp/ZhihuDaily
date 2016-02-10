@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ZhihuDaily</string>
+    <string name="richangxinlixue">日常心理学</string>
+    <string name="tuijianribao">用户推荐日报</string>
+    <string name="dianyingribao">电影日报</string>
+    <string name="buxuwuliao">不许无聊</string>
+    <string name="night">夜间模式</string>
+    <string name="day">日间模式</string>
+    <string name="shejiribao">设计日报</string>
+    <string name="dagongsiribao">大公司日报</string>
+    <string name="caijingribao">财经日报</string>
+    <string name="hulianwanganquan">互联网安全</string>
+    <string name="kaishiyouxi">开始游戏</string>
+    <string name="yinyueribao">音乐日报</string>
+    <string name="dongmanribao">动漫日报</string>
+    <string name="tiyuribao">体育日报</string>
+    <string name="shouye">首页</string>
+</resources>

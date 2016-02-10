@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/latest"
+            android:title="@string/shouye" />
+        <item
+            android:id="@+id/tuijianribao"
+            android:title="@string/tuijianribao" />
+        <item
+            android:id="@+id/richangxinlixue"
+            android:title="@string/richangxinlixue" />
+        <item
+            android:id="@+id/dianyingribao"
+            android:title="@string/dianyingribao" />
+        <item
+            android:id="@+id/buxuwuliao"
+            android:title="@string/buxuwuliao" />
+        <item
+            android:id="@+id/shejiribao"
+            android:title="@string/shejiribao" />
+        <item
+            android:id="@+id/dagongsiribao"
+            android:title="@string/dagongsiribao" />
+        <item
+            android:id="@+id/caijingribao"
+            android:title="@string/caijingribao" />
+        <item
+            android:id="@+id/hulianwanganquan"
+            android:title="@string/hulianwanganquan" />
+        <item
+            android:id="@+id/kaishiyouxi"
+            android:title="@string/kaishiyouxi" />
+        <item
+            android:id="@+id/yinyueribao"
+            android:title="@string/yinyueribao" />
+        <item
+            android:id="@+id/dongmanribao"
+            android:title="@string/dongmanribao" />
+        <item
+            android:id="@+id/tiyuribao"
+            android:title="@string/tiyuribao" />
+    </group>
+
+
+</menu>

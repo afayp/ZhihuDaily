@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF008BED</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="light_news_item">#FFF0F0F0</color>
+    <color name="light_storys">#FFF0F0F0</color>
+    <color name="light_story_item">#ffffff</color>
+    <color name="light_story_item_pressed">#c6c6c6</color>
+    <color name="light_storys_topic">#ff666666</color>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/top_stories_iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
+    <TextView
+        android:id="@+id/top_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HelloWorld"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@drawable/text_bg"
+        android:textColor="#FFFFFF"
+       android:layout_centerInParent="true"/>
+
+
+</RelativeLayout>
