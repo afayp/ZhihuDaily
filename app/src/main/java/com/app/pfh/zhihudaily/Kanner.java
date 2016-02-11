@@ -205,9 +205,9 @@ public class Kanner extends FrameLayout implements OnClickListener {
         public void onPageSelected(int arg0) {
             for (int i = 0; i < iv_dots.size(); i++) {
                 if (i == arg0 - 1) {
-                    iv_dots.get(i).setImageResource(R.drawable.dot_focus);
+                    iv_dots.get(i).setImageResource(R.mipmap.dot_focus);
                 } else {
-                    iv_dots.get(i).setImageResource(R.drawable.dot_blur);
+                    iv_dots.get(i).setImageResource(R.mipmap.dot_blur);
                 }
             }
 

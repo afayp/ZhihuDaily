@@ -8,4 +8,6 @@
     <color name="light_story_item">#ffffff</color>
     <color name="light_story_item_pressed">#c6c6c6</color>
     <color name="light_storys_topic">#ff666666</color>
+    <color name="light_item_text">#ff000000</color>
+    <color name="lighe_item_text_read">#6e6d6d</color>
 </resources>

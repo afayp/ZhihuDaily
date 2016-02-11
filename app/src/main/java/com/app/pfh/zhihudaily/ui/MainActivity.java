@@ -1,5 +1,9 @@
 package com.app.pfh.zhihudaily.ui;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private String mCurType = "latest";
     private int mCurId = -1;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawer = (DrawerLayout) findViewById(R.id.drawerlayout);
         mNavigationView = (NavigationView) findViewById(R.id.navigationview);
@@ -120,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-        transaction.replace(R.id.content_framelayout,fragment);
+        transaction.replace(R.id.content_framelayout, fragment);
         transaction.commit();
     }
 
@@ -131,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {
             //采用了navigationview貌似item不能变更，那就只能用固定的主题日报了
-
             item.setCheckable(true);
             mDrawer.closeDrawers();
             int itemId = item.getItemId();
@@ -147,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
                 mCurId = -1;
                 mCurType = "latest";
             }else {
-                Log.e("ZhuhuDaily" , "点击了MenuItem"+position);
                 ThemeFragment themeFragment = ThemeFragment.newInstance(titles[position], ids[position]);
                 replaceFragment(themeFragment);
                 mCurId = ids[position];
@@ -173,12 +181,45 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.moshi:
                     break;
                 case R.id.setting:
+                    Intent intent = new Intent(MainActivity.this,SettingActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.about:
+                    showAboutWindow();
                     break;
             }
             return super.onOptionsItemSelected(item);
         }
 
-        public void setSwipeRefreshEnable(boolean enable) {
+    private void showAboutWindow() {
+        View aboutView = LayoutInflater.from(MainActivity.this).inflate(R.layout.about_layout,null);
+        TextView tv_dizhi = (TextView) aboutView.findViewById(R.id.github_dizhi);
+        TextView tv_author = (TextView) aboutView.findViewById(R.id.github_author);
+        tv_dizhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://github.com/afayp/ZhihuDaily");
+                Intent intent  = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+        tv_author.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://github.com/afayp/ZhihuDaily");
+                Intent intent  = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        PopupWindow popupWindow = new PopupWindow(aboutView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,true);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupWindow.showAtLocation(drawerLayout, Gravity.CENTER, 0, 0);
+    }
+
+    public void setSwipeRefreshEnable(boolean enable) {
             mSwipeRefreshLayout.setEnabled(enable);
         }
 

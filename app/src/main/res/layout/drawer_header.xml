@@ -24,7 +24,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:scaleType="fitCenter"
-                android:background="@drawable/icon" />
+                android:background="@mipmap/icon" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/shoucang"
+                android:drawableLeft="@mipmap/shoucang"
                 android:gravity="center"
                 android:text="我的收藏"
                 android:textColor="@android:color/white"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/xiazai"
+                android:drawableLeft="@mipmap/download"
                 android:gravity="center"
                 android:text="离线下载"
                 android:textColor="@android:color/white"

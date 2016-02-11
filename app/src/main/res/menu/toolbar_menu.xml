@@ -9,5 +9,9 @@
         android:id="@+id/setting"
         android:title="设置选项"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/about"
+        android:title="关于"
+        app:showAsAction="never"/>
 
 </menu>

@@ -2,6 +2,8 @@ package com.app.pfh.zhihudaily.fragment;
 
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,11 +18,13 @@ import android.widget.TextView;
 
 import com.app.pfh.zhihudaily.R;
 import com.app.pfh.zhihudaily.adapter.ThemeAdapter;
+import com.app.pfh.zhihudaily.db.DbHelper;
 import com.app.pfh.zhihudaily.model.ThemeContent;
 import com.app.pfh.zhihudaily.model.Theme_content_story;
 import com.app.pfh.zhihudaily.ui.MainActivity;
 import com.app.pfh.zhihudaily.ui.ThemeContentActivity;
 import com.app.pfh.zhihudaily.utils.NetUtils;
+import com.app.pfh.zhihudaily.utils.PrefsUtils;
 import com.app.pfh.zhihudaily.utils.UrlUtils;
 import com.google.gson.Gson;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -89,10 +93,13 @@ public class ThemeFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Theme_content_story story = (Theme_content_story) parent.getAdapter().getItem(position);
+                PrefsUtils.changeItemState(mActivity, story.getId() + "", true);
+                TextView tv = (TextView) view.findViewById(R.id.tv_title);
+                tv.setTextColor(getResources().getColor(R.color.lighe_item_text_read));
                 Intent intent = new Intent(mActivity, ThemeContentActivity.class);
-                intent.putExtra("story" ,story);
+                intent.putExtra("story", story);
                 startActivity(intent);
-                Log.e("ThemeContentActivity","startactivity");
+                Log.e("ThemeContentActivity", "startactivity");
             }
         });
 
@@ -107,7 +114,7 @@ public class ThemeFragment extends BaseFragment {
 
     private void loadLatest() {
         isLoading = true;
-        if (NetUtils.isConnected(mActivity) || NetUtils.isWifi(mActivity)) {
+        if (NetUtils.isConnected(mActivity)) {
             NetUtils.get(UrlUtils.THEME_CONTENT_URL + mId, new TextHttpResponseHandler() {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -116,12 +123,26 @@ public class ThemeFragment extends BaseFragment {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                Log.e("ZhuhuDaily", responseString);
+                    Log.e("Zhuhudaily", "拿到json");
+                    DbHelper dbHelper = new DbHelper(mActivity);
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    db.execSQL("replace into CacheList(date,json) values(" + (Integer.MAX_VALUE + Integer.parseInt(mId + "")) + ",' " + responseString + "')");
+                    db.close();
+                    Log.e("Zhuhudaily", "存到数据库");
                     parseLatestJson(responseString);
                 }
             });
         } else {
-            //TODO 1.从数据库中读数据，2.如果没有数据弹出无网络提示
+            DbHelper dbHelper = new DbHelper(mActivity);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            Cursor cursor = db.rawQuery("select * from CacheList where date = " + (Integer.MAX_VALUE + Integer.parseInt(mId + "")), null);
+            if (cursor.moveToFirst()) {
+                String json = cursor.getString(cursor.getColumnIndex("json"));
+                parseLatestJson(json);
+            }
+            cursor.close();
+            db.close();
+
         }
 
     }

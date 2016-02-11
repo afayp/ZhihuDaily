@@ -42,6 +42,7 @@
         android:layout_gravity="left"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer_menu"
+        app:itemTextAppearance="@style/MyNavigationTextStyle"
         android:scrollbars="none"
         />
            

@@ -31,6 +31,7 @@
         </activity>
         <activity android:name=".ui.LatestContentActivity"></activity>
         <activity android:name=".ui.ThemeContentActivity"></activity>
+        <activity android:name=".ui.SettingActivity"></activity>
     </application>
 
 </manifest>

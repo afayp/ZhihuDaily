@@ -1,5 +1,7 @@
 package com.app.pfh.zhihudaily.ui;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -15,6 +17,7 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.app.pfh.zhihudaily.R;
+import com.app.pfh.zhihudaily.db.WebDbHelper;
 import com.app.pfh.zhihudaily.model.Content;
 import com.app.pfh.zhihudaily.model.Story;
 import com.app.pfh.zhihudaily.model.Theme_content_story;
@@ -48,9 +51,9 @@ public class ThemeContentActivity extends AppCompatActivity{
 
     private void initViews() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(story.getTitle());
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        mToolbar.setTitle("nima");
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,11 +83,26 @@ public class ThemeContentActivity extends AppCompatActivity{
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    WebDbHelper dbHelper = new WebDbHelper(ThemeContentActivity.this);
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    responseString = responseString.replaceAll("'", "''");
+                    db.execSQL("replace into Cache(newsId,json) values(" + story.getId() + ",'" + responseString + "')");
+                    db.close();
                     parseJson(responseString);
                     Log.e("LatestContentActivity", "解析数据");
 
                 }
             });
+        }else {
+            WebDbHelper dbHelper = new WebDbHelper(ThemeContentActivity.this);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            Cursor cursor = db.rawQuery("select * from Cache where newsId = " + story.getId(), null);
+            if (cursor.moveToFirst()) {
+                String json = cursor.getString(cursor.getColumnIndex("json"));
+                parseJson(json);
+            }
+            cursor.close();
+            db.close();
 
         }
     }

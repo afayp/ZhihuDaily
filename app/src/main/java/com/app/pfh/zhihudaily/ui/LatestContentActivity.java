@@ -2,6 +2,8 @@ package com.app.pfh.zhihudaily.ui;
 
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -19,6 +21,7 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.app.pfh.zhihudaily.R;
+import com.app.pfh.zhihudaily.db.WebDbHelper;
 import com.app.pfh.zhihudaily.model.Content;
 import com.app.pfh.zhihudaily.model.Story;
 import com.app.pfh.zhihudaily.utils.HttpUtils;
@@ -96,12 +99,26 @@ public class LatestContentActivity extends AppCompatActivity{
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    WebDbHelper dbHelper = new WebDbHelper(LatestContentActivity.this);
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    responseString = responseString.replaceAll("'", "''");
+                    db.execSQL("replace into Cache(newsId,json) values(" + story.getId() + ",'" + responseString + "')");
+                    db.close();
                     parseJson(responseString);
                     Log.e("LatestContentActivity", "解析数据");
 
                 }
             });
-
+        }else {
+            WebDbHelper dbHelper = new WebDbHelper(LatestContentActivity.this);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            Cursor cursor = db.rawQuery("select * from Cache where newsId = " + story.getId(), null);
+            if (cursor.moveToFirst()) {
+                String json = cursor.getString(cursor.getColumnIndex("json"));
+                parseJson(json);
+            }
+            cursor.close();
+            db.close();
         }
     }
 

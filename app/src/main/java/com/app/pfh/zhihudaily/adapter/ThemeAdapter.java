@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.app.pfh.zhihudaily.R;
 import com.app.pfh.zhihudaily.model.ThemeContent;
 import com.app.pfh.zhihudaily.model.Theme_content_story;
+import com.app.pfh.zhihudaily.utils.PrefsUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -72,8 +73,11 @@ public class ThemeAdapter extends BaseAdapter {
             holder = (MyViewHOlder) convertView.getTag();
         }
         Theme_content_story story = mThemeContentStoryList.get(position);
-        Log.e("ZhuhuDaily", story.toString());
         holder.tv.setText(story.getTitle());
+        Boolean isRead = PrefsUtils.getItemState(mContext, story.getId() + "");
+        if(isRead){
+            holder.tv.setTextColor(mContext.getResources().getColor(R.color.lighe_item_text_read));
+        }
         if(story.getImages() == null){
             holder.iv.setVisibility(View.GONE);
         }else {

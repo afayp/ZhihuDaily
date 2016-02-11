@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.app.pfh.zhihudaily.R;
 import com.app.pfh.zhihudaily.model.Story;
+import com.app.pfh.zhihudaily.utils.PrefsUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -38,7 +39,7 @@ public class StoryAdapter extends BaseAdapter {
     public void addData(List<Story> storyList) {
         mStoryList.addAll(storyList);
         notifyDataSetChanged();
-        Log.e("ZhuhuDaily", "storyAdapter添加数据成功");
+//        Log.e("ZhuhuDaily", "storyAdapter添加数据成功");
     }
 
     @Override
@@ -71,8 +72,11 @@ public class StoryAdapter extends BaseAdapter {
             view = convertView;
             viewHolder = (MyViewHolder) view.getTag();
         }
-
         viewHolder.tv_title.setText(mStoryList.get(position).getTitle());
+        Boolean isRead = PrefsUtils.getItemState(mContext, story.getId() + "");
+        if(isRead){
+            viewHolder.tv_title.setTextColor(mContext.getResources().getColor(R.color.lighe_item_text_read));
+        }
         mImageloader.displayImage(story.getImages().get(0), viewHolder.iv_title, options);
         return view;
     }
