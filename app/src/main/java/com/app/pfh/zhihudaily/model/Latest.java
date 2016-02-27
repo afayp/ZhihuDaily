@@ -2,9 +2,7 @@ package com.app.pfh.zhihudaily.model;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2016/2/2.
- */
+
 public class Latest {
 
     private String date;

@@ -35,6 +35,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,21 +50,24 @@ public class IndexFragment extends BaseFragment {
     private String mDate;
 
 
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((MainActivity) mActivity).setToolbarTitle("今日热闻");
         View view = inflater.inflate(R.layout.index_fragment, container, false);
         mListView = (ListView) view.findViewById(R.id.lv_news);
-//        Log.e("ZhuhuDaily", "创建header");
         View mHeaderView = inflater.inflate(R.layout.kanner, mListView, false);
-//        Log.e("ZhuhuDaily", "创建header成功");
         mKanner = (Kanner) mHeaderView.findViewById(R.id.kanner);
         mKanner.setOnItemClickListener(new Kanner.OnItemClickListener() {
             @Override
             public void click(View v, TopSotory entity) {
+                Log.d("ZhihuDialy", entity.toString());
                 Story story = new Story();
                 story.setId(entity.getId());
                 story.setTitle(entity.getTitle());
+                List<String> images = new ArrayList<String>();
+                images.add(entity.getImage());
+                story.setImages(images);
                 Intent intent = new Intent(getActivity(), LatestContentActivity.class);
                 intent.putExtra("story", story);
                 startActivity(intent);
@@ -149,10 +153,7 @@ public class IndexFragment extends BaseFragment {
             cursor.close();
             db.close();
         }
-
     }
-
-
     public void loadMore(String url) {
         isLoading = true;
         if (NetUtils.isConnected(mActivity)) {
@@ -206,11 +207,9 @@ public class IndexFragment extends BaseFragment {
         Latest latest = gson.fromJson(responseString, Latest.class);
         mDate = latest.getDate();
         List<TopSotory> tops = latest.getTop_stories();
-        Log.e("ZhuhuDaily", "头部" + tops.get(0).toString());
         mKanner.setTopStory(tops);
         //处理story数据
         List<Story> stories = latest.getStories();
-        Log.e("ZhuhuDaily", "下面" + stories.get(0).toString());
         storyAdapter.addData(stories);
     }
 

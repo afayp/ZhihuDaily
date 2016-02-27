@@ -10,4 +10,5 @@
     <color name="light_storys_topic">#ff666666</color>
     <color name="light_item_text">#ff000000</color>
     <color name="lighe_item_text_read">#6e6d6d</color>
+    <color name="share_window_line">#4988fd</color>
 </resources>

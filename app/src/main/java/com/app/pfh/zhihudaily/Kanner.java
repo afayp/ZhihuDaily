@@ -69,7 +69,6 @@ public class Kanner extends FrameLayout implements OnClickListener {
     public void setTopStory(List<TopSotory> topStories) {
         this.topStories = topStories;
         reset();
-        Log.e("ZhuhuDaily", "kanner添加数据成功！");
     }
 
     private void reset() {

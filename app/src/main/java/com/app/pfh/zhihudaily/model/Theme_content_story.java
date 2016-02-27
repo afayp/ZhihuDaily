@@ -3,15 +3,21 @@ package com.app.pfh.zhihudaily.model;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Administrator on 2016/2/4.
- */
+
 public class Theme_content_story implements Serializable {
 
     private String title;
     private List<String> images;
     private int id;
     private int type;
+
+    public Theme_content_story() {
+    }
+
+    public Theme_content_story(String title, int id) {
+        this.title = title;
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

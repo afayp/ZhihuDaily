@@ -2,6 +2,9 @@ package com.app.pfh.zhihudaily.model;
 
 
 public class TopSotory {
+    /**
+     * 包含在最新消息里面 http://news-at.zhihu.com/api/4/news/latest
+     */
     private int id;
     private String title;
     private String ga_prefix;

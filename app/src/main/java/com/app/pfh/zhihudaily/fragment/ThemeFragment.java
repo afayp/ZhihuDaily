@@ -46,7 +46,7 @@ public class ThemeFragment extends BaseFragment {
     private View headerView;
     private ImageView mTopImageView;
     private ThemeAdapter themeAdapter;
-    private Boolean isLoading;
+    private boolean isLoading;
     private TextView mTopTitle;
 
 

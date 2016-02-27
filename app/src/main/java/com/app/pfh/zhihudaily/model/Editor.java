@@ -1,8 +1,6 @@
 package com.app.pfh.zhihudaily.model;
 
-/**
- * Created by Administrator on 2016/2/4.
- */
+
 public class Editor {
     private int id;
     private String bio;

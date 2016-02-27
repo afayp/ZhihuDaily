@@ -6,9 +6,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Administrator on 2016/2/2.
- */
+
 public class Story implements Serializable {
     /**
      * stories : 当日新闻
@@ -24,6 +22,15 @@ public class Story implements Serializable {
     private List<String> images;
     private int id;
     private int type;
+
+
+    public Story() {
+    }
+
+    public Story(String title, int id) {
+        this.title = title;
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

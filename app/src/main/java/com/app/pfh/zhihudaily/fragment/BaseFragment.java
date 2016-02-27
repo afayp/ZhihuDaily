@@ -16,7 +16,6 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e("ZhuhuDaily", "创建fragment了");
         mActivity = getActivity();
         return initView(inflater, container, savedInstanceState);
     }
@@ -24,7 +23,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.e("ZhuhuDaily","加载数据");
         initData();
     }
 

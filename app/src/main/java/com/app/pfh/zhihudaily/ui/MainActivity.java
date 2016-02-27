@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -29,9 +30,11 @@ import android.widget.Toast;
 
 import com.app.pfh.zhihudaily.R;
 import com.app.pfh.zhihudaily.fragment.IndexFragment;
+import com.app.pfh.zhihudaily.fragment.ShouCangFragment;
 import com.app.pfh.zhihudaily.fragment.ThemeFragment;
 
 import java.util.Arrays;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,11 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
         IndexFragment indexFragment = new IndexFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.content_framelayout, indexFragment);
-        transaction.commit();
-
+        replaceFragment(indexFragment);
     }
 
     private void initViews() {
@@ -103,15 +102,19 @@ public class MainActivity extends AppCompatActivity {
         shoucang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"点击收藏哟",Toast.LENGTH_SHORT);
+                ShouCangFragment shoucangFragmetn = new ShouCangFragment();
+                replaceFragment(shoucangFragmetn);
+                mDrawer.closeDrawer(GravityCompat.START);
             }
         });
-        download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"点击下载哟",Toast.LENGTH_SHORT);
-            }
-        });
+//        download.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MainActivity.this,"点击下载哟",Toast.LENGTH_SHORT);
+//                mDrawer.closeDrawer(GravityCompat.START);
+//
+//            }
+//        });
     }
 
     //TODO 1.根据fragmenttype判断刷新,2.每次new一个fragment合适吗。。
@@ -178,8 +181,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.moshi:
-                    break;
                 case R.id.setting:
                     Intent intent = new Intent(MainActivity.this,SettingActivity.class);
                     startActivity(intent);
