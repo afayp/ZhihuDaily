@@ -99,7 +99,6 @@ public class ThemeFragment extends BaseFragment {
                 Intent intent = new Intent(mActivity, ThemeContentActivity.class);
                 intent.putExtra("story", story);
                 startActivity(intent);
-                Log.e("ThemeContentActivity", "startactivity");
             }
         });
 
@@ -123,12 +122,10 @@ public class ThemeFragment extends BaseFragment {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                    Log.e("Zhuhudaily", "拿到json");
                     DbHelper dbHelper = new DbHelper(mActivity);
                     SQLiteDatabase db = dbHelper.getWritableDatabase();
                     db.execSQL("replace into CacheList(date,json) values(" + (Integer.MAX_VALUE + Integer.parseInt(mId + "")) + ",' " + responseString + "')");
                     db.close();
-                    Log.e("Zhuhudaily", "存到数据库");
                     parseLatestJson(responseString);
                 }
             });
@@ -148,7 +145,6 @@ public class ThemeFragment extends BaseFragment {
     }
 
     private void parseLatestJson(String responseString) {
-        Log.e("ZhuhuDaily", "加载theme数据");
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
@@ -157,9 +153,7 @@ public class ThemeFragment extends BaseFragment {
         ThemeContent content = gson.fromJson(responseString, ThemeContent.class);
         //初始化headview
         mTopTitle.setText(content.getDescription());
-        Log.e("ZhuhuDaily", "加载theme数据，topTxt");
         ImageLoader.getInstance().displayImage(content.getBackground(), mTopImageView, options);
-        Log.e("ZhuhuDaily", "加载theme数据，topImg");
         List<Theme_content_story> stories = content.getStories();
         themeAdapter.addData(stories);
         mListView.setAdapter(themeAdapter);

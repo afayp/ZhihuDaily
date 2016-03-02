@@ -61,7 +61,6 @@ public class IndexFragment extends BaseFragment {
         mKanner.setOnItemClickListener(new Kanner.OnItemClickListener() {
             @Override
             public void click(View v, TopSotory entity) {
-                Log.d("ZhihuDialy", entity.toString());
                 Story story = new Story();
                 story.setId(entity.getId());
                 story.setTitle(entity.getTitle());
