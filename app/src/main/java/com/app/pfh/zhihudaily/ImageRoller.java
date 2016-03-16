@@ -6,7 +6,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Kanner extends FrameLayout implements OnClickListener {
+public class ImageRoller extends FrameLayout implements OnClickListener {
     private List<TopSotory> topStories;
     private ImageLoader mImageLoader;
     private DisplayImageOptions options;
@@ -40,7 +39,7 @@ public class Kanner extends FrameLayout implements OnClickListener {
     private Handler handler = new Handler();
     private OnItemClickListener mItemClickListener;
 
-    public Kanner(Context context, AttributeSet attrs, int defStyle) {
+    public ImageRoller(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mImageLoader = ImageLoader.getInstance();
         options = new DisplayImageOptions.Builder()
@@ -58,11 +57,11 @@ public class Kanner extends FrameLayout implements OnClickListener {
         delayTime = 2000;
     }
 
-    public Kanner(Context context, AttributeSet attrs) {
+    public ImageRoller(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public Kanner(Context context) {
+    public ImageRoller(Context context) {
         this(context, null);
     }
 
@@ -78,7 +77,7 @@ public class Kanner extends FrameLayout implements OnClickListener {
 
     private void initUI() {
         View view = LayoutInflater.from(context).inflate(
-                R.layout.kanner_layout, this, true);
+                R.layout.ImageRoller_layout, this, true);
         vp = (ViewPager) view.findViewById(R.id.vp);
         ll_dot = (LinearLayout) view.findViewById(R.id.ll_dot);
         ll_dot.removeAllViews();
@@ -97,7 +96,7 @@ public class Kanner extends FrameLayout implements OnClickListener {
 
         for (int i = 0; i <= len + 1; i++) {
             View fm = LayoutInflater.from(context).inflate(
-                    R.layout.kanner_content_layout, null);
+                    R.layout.ImageRoller_content_layout, null);
             ImageView iv = (ImageView) fm.findViewById(R.id.iv_title);
             TextView tv_title = (TextView) fm.findViewById(R.id.tv_title);
             iv.setScaleType(ScaleType.CENTER_CROP);

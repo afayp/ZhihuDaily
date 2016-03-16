@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.pfh.zhihudaily.Kanner;
+import com.app.pfh.zhihudaily.ImageRoller;
 import com.app.pfh.zhihudaily.R;
 import com.app.pfh.zhihudaily.adapter.StoryAdapter;
 import com.app.pfh.zhihudaily.db.DbHelper;
@@ -44,7 +43,7 @@ import java.util.List;
 public class IndexFragment extends BaseFragment {
 
     private ListView mListView;
-    private Kanner mKanner;
+    private ImageRoller imageRoller;
     private StoryAdapter storyAdapter;
     private Boolean isLoading;
     private String mDate;
@@ -56,9 +55,9 @@ public class IndexFragment extends BaseFragment {
         ((MainActivity) mActivity).setToolbarTitle("今日热闻");
         View view = inflater.inflate(R.layout.index_fragment, container, false);
         mListView = (ListView) view.findViewById(R.id.lv_news);
-        View mHeaderView = inflater.inflate(R.layout.kanner, mListView, false);
-        mKanner = (Kanner) mHeaderView.findViewById(R.id.kanner);
-        mKanner.setOnItemClickListener(new Kanner.OnItemClickListener() {
+        View mHeaderView = inflater.inflate(R.layout.ImageRoller, mListView, false);
+        imageRoller = (ImageRoller) mHeaderView.findViewById(R.id.kanner);
+        imageRoller.setOnItemClickListener(new ImageRoller.OnItemClickListener() {
             @Override
             public void click(View v, TopSotory entity) {
                 Story story = new Story();
@@ -193,8 +192,9 @@ public class IndexFragment extends BaseFragment {
     private void parseBeforeJson(String responseString) {
         Gson gson = new Gson();
         Before before = gson.fromJson(responseString, Before.class);
+        mDate = before.getDate();
         List<Story> storyList = before.getStories();
-        storyAdapter.addData(storyList);
+        storyAdapter.addData(storyList,mDate);
         isLoading = false;
     }
 
@@ -206,10 +206,10 @@ public class IndexFragment extends BaseFragment {
         Latest latest = gson.fromJson(responseString, Latest.class);
         mDate = latest.getDate();
         List<TopSotory> tops = latest.getTop_stories();
-        mKanner.setTopStory(tops);
+        imageRoller.setTopStory(tops);
         //处理story数据
         List<Story> stories = latest.getStories();
-        storyAdapter.addData(stories);
+        storyAdapter.addData(stories,mDate);
     }
 
 

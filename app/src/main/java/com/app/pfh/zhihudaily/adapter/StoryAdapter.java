@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.app.pfh.zhihudaily.R;
 import com.app.pfh.zhihudaily.model.Story;
 import com.app.pfh.zhihudaily.utils.PrefsUtils;
+import com.app.pfh.zhihudaily.utils.TimeUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -36,7 +37,7 @@ public class StoryAdapter extends BaseAdapter {
 
     }
 
-    public void addData(List<Story> storyList) {
+    public void addData(List<Story> storyList, String date) {
         mStoryList.addAll(storyList);
         notifyDataSetChanged();
 //        Log.e("ZhuhuDaily", "storyAdapter添加数据成功");
@@ -58,6 +59,15 @@ public class StoryAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if ("瞎扯".equals(mStoryList.get(position).getTitle().substring(0, 2))) {
+//            Log.e("JustWeather", "item的title：" + story.getTitle() + " item的time：" + mDate);
+            return 2;
+        }
+        return 1;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Story story = mStoryList.get(position);
         MyViewHolder viewHolder;
@@ -67,24 +77,38 @@ public class StoryAdapter extends BaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_story, parent, false);
             viewHolder.tv_title = (TextView) view.findViewById(R.id.tv_title);
             viewHolder.iv_title = (ImageView) view.findViewById(R.id.iv_title);
+            viewHolder.tv_time = (TextView) view.findViewById(R.id.tv_time);
             view.setTag(viewHolder);
         } else {
             view = convertView;
             viewHolder = (MyViewHolder) view.getTag();
         }
+
+//        if (getItemViewType(position)==2){
+//            Log.e("JustWeather",story.getTitle().substring(0,2));
+//            viewHolder.tv_time.setVisibility(View.VISIBLE);
+//            viewHolder.tv_time.setText(getTime(story.getGa_prefix()));
+//        }
+
         viewHolder.tv_title.setText(mStoryList.get(position).getTitle());
         Boolean isRead = PrefsUtils.getItemState(mContext, story.getId() + "");
-        if(isRead){
+        if (isRead) {
             viewHolder.tv_title.setTextColor(mContext.getResources().getColor(R.color.lighe_item_text_read));
         }
         mImageloader.displayImage(story.getImages().get(0), viewHolder.iv_title, options);
+
         return view;
     }
 
     class MyViewHolder {
         TextView tv_title;
         ImageView iv_title;
+        TextView tv_time;
     }
 
+    private String getTime(String date) {
+        String time = date.substring(0, 2) + "月" + date.substring(2, 4) + "日";
+        return time;
+    }
 
 }

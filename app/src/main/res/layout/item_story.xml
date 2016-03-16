@@ -42,6 +42,15 @@
                 android:textSize="18sp"
                 android:textColor="@color/light_item_text"/>
         </RelativeLayout>
-
     </FrameLayout>
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="03月10日"
+        android:textSize="18sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"/>
 </LinearLayout>
